@@ -1,15 +1,11 @@
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
+        # Store the numbers we have already encountered from the nums list and map them to their index
+        already_seen_map = dict()
         for i in range(len(nums)):
             x1 = nums[i]
-            for j in range(i + 1, len(nums)):
-                x2 = nums[j]
-                sum = x1 + x2
-                if sum == target:
-                    return [i, j]
-
-nums = [2,7,11,15]
-target = 9
-solution_instance = Solution()
-res = solution_instance.twoSum(nums, target)
-print("The resul is :", res)
+            x2 = target - x1
+            if x2 in already_seen_map:
+                return [i, already_seen_map[x2]]
+            else:
+                already_seen_map[x1] = i
