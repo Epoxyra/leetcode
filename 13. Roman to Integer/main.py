@@ -1,0 +1,33 @@
+# Symbol       Value
+# I             1
+# V             5
+# X             10
+# L             50
+# C             100
+# D             500
+# M             1000
+
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        symbol_value_map = {
+            "I": 1,
+            "V": 5,
+            "X": 10,
+            "L": 50,
+            "C": 100,
+            "D": 500,
+            "M": 1000,
+        }
+        symbol_counts = {}
+        i = 0
+        while i < len(s):
+            if i + 1 < len(s) and symbol_value_map[s[i]] < symbol_value_map[s[i + 1]]:
+                symbol_counts[s[i]] = 9 + symbol_counts.get(s[i], 0) if s[i + 1] in ["X", "C", "M"] else 4 + symbol_counts.get(s[i], 0)
+                i += 2
+            else:
+                symbol_counts[s[i]] = 1 + symbol_counts.get(s[i], 0)
+                i += 1
+        res = 0
+        for symbol in symbol_value_map.keys():
+            res += symbol_counts.get(symbol, 0) * symbol_value_map[symbol]
+        return res
