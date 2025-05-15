@@ -18,16 +18,13 @@ class Solution:
             "D": 500,
             "M": 1000,
         }
-        symbol_counts = {}
+        res = 0
         i = 0
         while i < len(s):
             if i + 1 < len(s) and symbol_value_map[s[i]] < symbol_value_map[s[i + 1]]:
-                symbol_counts[s[i]] = 9 + symbol_counts.get(s[i], 0) if s[i + 1] in ["X", "C", "M"] else 4 + symbol_counts.get(s[i], 0)
+                res += 9*symbol_value_map.get(s[i]) if s[i + 1] in ["X", "C", "M"] else 4*symbol_value_map.get(s[i])
                 i += 2
             else:
-                symbol_counts[s[i]] = 1 + symbol_counts.get(s[i], 0)
+                res += symbol_value_map.get(s[i])
                 i += 1
-        res = 0
-        for symbol in symbol_value_map.keys():
-            res += symbol_counts.get(symbol, 0) * symbol_value_map[symbol]
         return res
