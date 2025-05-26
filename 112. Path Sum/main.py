@@ -13,21 +13,16 @@ class Solution:
         if not root:
             return False
         queue = deque()
-        queue.append(root)
-        path_sum = []
+        queue.append((root, root.val))
 
         while queue:
             for _ in range(len(queue)):
-                node = queue.popleft()
+                node, curr_sum = queue.popleft()
                 if not node.left and not node.right:
-                    path_sum.append(node.val)
+                    if curr_sum == targetSum:
+                        return True
                 if node.left:
-                    node.left.val += node.val
-                    queue.append(node.left)
+                    queue.append((node.left, curr_sum + node.left.val))
                 if node.right:
-                    node.right.val += node.val
-                    queue.append(node.right)
-        for sum in path_sum:
-            if sum == targetSum:
-                return True
+                    queue.append((node.right, curr_sum + node.right.val))
         return False
